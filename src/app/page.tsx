@@ -1,9 +1,11 @@
-import { Button } from "@nextui-org/button";
+import Main from "@/components/globals/Main";
+import SideBar from "@/components/globals/SideBar";
 
 export default function Home() {
   return (
-    <Button color="primary" className="font-mono">
-      Button
-    </Button>
+    <div className="flex h-dvh">
+      <SideBar />
+      <Main />
+    </div>
   );
 }
