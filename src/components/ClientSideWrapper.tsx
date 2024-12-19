@@ -1,4 +1,5 @@
 "use client";
+
 import dynamic from "next/dynamic";
 
 const SideBar = dynamic(() => import("@/components/globals/SideBar"), {
@@ -8,11 +9,17 @@ const Main = dynamic(() => import("@/components/globals/Main"), {
   ssr: false,
 });
 
-export default function Home() {
+interface ClientSideWrapperProps {
+  id: string;
+}
+
+const ClientSideWrapper = ({ id }: ClientSideWrapperProps) => {
   return (
     <div className="text-white bg-[#212121] flex h-dvh">
-      <SideBar />
-      <Main />
+      <SideBar id={id} />
+      <Main id={id} />
     </div>
   );
-}
+};
+
+export default ClientSideWrapper;

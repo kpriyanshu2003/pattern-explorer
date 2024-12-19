@@ -12,7 +12,7 @@ export async function pingGPT(): Promise<GPT4Response | { status: number }> {
         "x-rapidapi-host": "chatgpt-42.p.rapidapi.com",
       },
     });
-    return response.data;
+    return { status: 200, data: response.data };
   } catch (e) {
     console.log(e);
     return { status: 500 };

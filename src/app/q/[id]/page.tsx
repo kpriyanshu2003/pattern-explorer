@@ -1,5 +1,4 @@
-import Main from "@/components/globals/Main";
-import SideBar from "@/components/globals/SideBar";
+import ClientSideWrapper from "@/components/ClientSideWrapper";
 
 export default async function Home({
   params,
@@ -9,6 +8,7 @@ export default async function Home({
   const id = (await params).id;
 
   if (!id) window.location.href = "/";
+
   if (typeof window !== "undefined") {
     const queries = JSON.parse(localStorage.getItem("queries") || "[]");
     if (!queries.find((query: { id: string }) => query.id === id)) {
@@ -16,10 +16,5 @@ export default async function Home({
     }
   }
 
-  return (
-    <div className="text-white bg-[#212121] flex h-dvh">
-      <SideBar id={id} />
-      <Main id={id} />
-    </div>
-  );
+  return <ClientSideWrapper id={id} />;
 }
