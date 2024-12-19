@@ -1,6 +1,6 @@
 export interface GPT4Response {
   status: number;
-  data: {
+  data?: {
     result: string;
     status: boolean;
     server_code: number;
@@ -9,7 +9,7 @@ export interface GPT4Response {
 
 export interface GPT4oReponse {
   status: number;
-  data: {
+  data?: {
     id: string;
     object: string;
     created: number;

@@ -3,7 +3,6 @@
 import { LocalStorageQueries } from "@/@types/LocalStorage";
 import classNames from "classnames";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { FaTrash } from "react-icons/fa6";
 import { GoSidebarCollapse } from "react-icons/go";
@@ -34,7 +33,10 @@ function SideBar({ id }: { id?: string }) {
           className={classNames("w-6 h-6 cursor-pointer")}
           onClick={() => toggleSideBar()}
         />
-        <GoPencil className={classNames("w-6 h-6 cursor-pointer ")} />
+        <GoPencil
+          className={classNames("w-6 h-6 cursor-pointer ")}
+          onClick={() => (window.location.href = "/")}
+        />
       </div>
 
       <div
