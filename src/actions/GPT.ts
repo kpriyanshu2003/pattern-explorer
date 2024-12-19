@@ -1,8 +1,17 @@
+// This file contains functions to interact with the GPT-4 API via RapidAPI.
+// The functions handle GET and POST requests to communicate with the API and process responses.
+
 "use server";
+
 import axios from "axios";
 import { GPT4Response } from "@/@types/GPTResponse";
 
-export async function pingGPT(): Promise<GPT4Response | { status: number }> {
+/**
+ * Function to check if the GPT API is reachable by sending a GET request.
+ *
+ * @returns {Promise<GPT4Response>} - A promise resolving to a GPT4Response object or an object with the status code.
+ */
+export async function pingGPT(): Promise<GPT4Response>  {
   try {
     const response = await axios.request({
       method: "GET",
@@ -19,25 +28,32 @@ export async function pingGPT(): Promise<GPT4Response | { status: number }> {
   }
 }
 
+/**
+ * Function to send a user message to the GPT API and receive a structured response.
+ *
+ * @param {string} message - The user message to send to GPT.
+ * @returns {Promise<GPT4Response>} - A promise resolving to a GPT4Response object containing the structured response.
+ *
+ * The response is expected to follow a specific structure defined in the system prompt:
+ * 1. Content category
+ * 2. Theme
+ * 3. Pattern
+ * 4. Mapped Content relationship
+ */
 export async function getGPTResponse(message: string): Promise<GPT4Response> {
   try {
     const response = await axios.request({
       method: "POST",
-      // url: "https://gpt-4o7.p.rapidapi.com/v1/chat/completions",
       url: "https://chatgpt-42.p.rapidapi.com/conversationgpt4-2",
       headers: {
         "x-rapidapi-key": process.env.RAPIDAPI_KEY,
         "x-rapidapi-host": "chatgpt-42.p.rapidapi.com",
-        // "x-rapidapi-host": "gpt-4o7.p.rapidapi.com",
         "Content-Type": "application/json",
       },
       data: {
         messages: [
-          // { role: "system", content: "Start each sentence with 'Suiii'" },
           { role: "user", content: message },
         ],
-        // temperature: 1,
-        // max_tokens: 2048,
         system_prompt: `analyze this text, and provide me response in structured manner. in the following way
 1.  Content category
 2. Theme

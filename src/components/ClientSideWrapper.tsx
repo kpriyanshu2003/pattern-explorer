@@ -1,9 +1,9 @@
 "use client";
 
-import dynamic from "next/dynamic";
+import dynamic from "next/dynamic";  // Dynamically import components to improve performance
 
 const SideBar = dynamic(() => import("@/components/globals/SideBar"), {
-  ssr: false,
+  ssr: false, // Disable server-side rendering for the component
 });
 const Main = dynamic(() => import("@/components/globals/Main"), {
   ssr: false,

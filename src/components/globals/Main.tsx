@@ -26,6 +26,16 @@ function Main({ id }: { id?: string }) {
     setFileName({ ...fileName, showFile: true, fileName: query.title });
   }, [id]);
 
+  /**
+ * Function: callGPT
+ * Description: Handles the GPT API call and processes the result.
+ * Key Steps:
+ *   - Validates the presence of file content.
+ *   - Sends the file content to the GPT API and processes the response.
+ *   - Saves the API result to local storage as a new query.
+ *   - Redirects the user to the query's details page.
+ * Handles errors during API calls and updates the `loading` state accordingly.
+ */
   const callGPT = async () => {
     if (!fileContent || fileContent.length === 0)
       return alert("Please upload a file first");
@@ -56,6 +66,17 @@ function Main({ id }: { id?: string }) {
     }
   };
 
+  /**
+ * Function: handleFileUpload
+ * Description: Handles the uploading of files and extracts their content.
+ * Parameters: 
+ *   - `event` (React.ChangeEvent<HTMLInputElement>): The file input change event.
+ * Key Steps:
+ *   - Retrieves the uploaded file.
+ *   - Reads the file content using the `FileReader` API.
+ *   - Updates the `fileContent` and `fileName` states.
+ * Handles errors during file reading.
+ */
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files) return;
     const file = event.target.files[0];

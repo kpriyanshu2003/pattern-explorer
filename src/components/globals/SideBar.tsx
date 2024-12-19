@@ -12,25 +12,36 @@ function SideBar({ id }: { id?: string }) {
   const [open, setOpen] = useState(true);
   const toggleSideBar = () => setOpen(!open);
 
+  /**
+   * Function: handleDelete
+   * Description: Removes a specific query object from the local storage by its unique `id`.
+   * Parameters: 
+   *  - `id` (string): The unique identifier of the query to be deleted.
+   * Functionality:
+   *  1. Retrieves the "queries" array from local storage, or initializes an empty array if it doesn't exist.
+   *  2. Filters out the query object that matches the provided `id`.
+   *  3. Updates the local storage with the filtered array.
+   *  4. Redirects the user to the root ("/") of the application.
+   */
   const handleDelete = (id: string) => {
     const queries = JSON.parse(localStorage.getItem("queries") || "[]");
     const newQueries = queries.filter(
       (query: LocalStorageQueries) => query.id !== id
     );
     localStorage.setItem("queries", JSON.stringify(newQueries));
-    window.location.href = "/";
+    window.location.href = "/"; 
   };
 
   return (
     <div
       className={classNames(
-        "text-white sticky h-screen bg-zinc-800 transition-all duration-300",
+        "hidden text-white sticky h-screen bg-zinc-800 transition-all duration-300",
         { "w-0": !open, "w-96": open }
       )}
     >
       <div className="flex items-center gap-4 absolute top-4 left-4">
         <GoSidebarCollapse
-          className={classNames("w-6 h-6 cursor-pointer")}
+          className={classNames("hidden lg:block w-6 h-6 cursor-pointer")}
           onClick={() => toggleSideBar()}
         />
         <GoPencil
