@@ -27,15 +27,15 @@ function Main({ id }: { id?: string }) {
   }, [id]);
 
   /**
- * Function: callGPT
- * Description: Handles the GPT API call and processes the result.
- * Key Steps:
- *   - Validates the presence of file content.
- *   - Sends the file content to the GPT API and processes the response.
- *   - Saves the API result to local storage as a new query.
- *   - Redirects the user to the query's details page.
- * Handles errors during API calls and updates the `loading` state accordingly.
- */
+   * Function: callGPT
+   * Description: Handles the GPT API call and processes the result.
+   * Key Steps:
+   *   - Validates the presence of file content.
+   *   - Sends the file content to the GPT API and processes the response.
+   *   - Saves the API result to local storage as a new query.
+   *   - Redirects the user to the query's details page.
+   * Handles errors during API calls and updates the `loading` state accordingly.
+   */
   const callGPT = async () => {
     if (!fileContent || fileContent.length === 0)
       return alert("Please upload a file first");
@@ -67,16 +67,16 @@ function Main({ id }: { id?: string }) {
   };
 
   /**
- * Function: handleFileUpload
- * Description: Handles the uploading of files and extracts their content.
- * Parameters: 
- *   - `event` (React.ChangeEvent<HTMLInputElement>): The file input change event.
- * Key Steps:
- *   - Retrieves the uploaded file.
- *   - Reads the file content using the `FileReader` API.
- *   - Updates the `fileContent` and `fileName` states.
- * Handles errors during file reading.
- */
+   * Function: handleFileUpload
+   * Description: Handles the uploading of files and extracts their content.
+   * Parameters:
+   *   - `event` (React.ChangeEvent<HTMLInputElement>): The file input change event.
+   * Key Steps:
+   *   - Retrieves the uploaded file.
+   *   - Reads the file content using the `FileReader` API.
+   *   - Updates the `fileContent` and `fileName` states.
+   * Handles errors during file reading.
+   */
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files) return;
     const file = event.target.files[0];
@@ -91,15 +91,15 @@ function Main({ id }: { id?: string }) {
   };
 
   return (
-    <div className="w-full relative ml-20 flex justify-center items-center flex-col">
-      <div className="w-full text-center text-2xl font-bold -mt-10">
+    <div className="w-full relative lg:px-0 lg:ml-20 flex justify-center items-center flex-col">
+      <div className="w-full text-center text-xl pl-6 lg:pl-0 lg:text-2xl font-bold -mt-24 lg:-mt-10">
         {fileName.showFile && fileName.fileName}
       </div>
 
-      <div className="w-10/12 h-5/6 pb-10 overflow-auto px-5">
+      <div className="w-11/12 lg:w-10/12 h-5/6 pb-10 overflow-auto lg:px-5">
         <div>
           {fileName.showFile && fileName.fileName && (
-            <div className="flex items-center justify-end mb-10">
+            <div className="flex items-center justify-end mb-10 mt-5 lg:mt-0">
               <div className="rounded-md bg-white text-black px-4 py-2 text-sm font-light">
                 {fileName.fileName}.txt
               </div>
@@ -107,7 +107,7 @@ function Main({ id }: { id?: string }) {
           )}
         </div>
         {id && (
-          <div className="leading-loose tracking-widest w-4/6">
+          <div className="leading-loose tracking-widest lg:w-4/6">
             <Typewriter
               onInit={(typewriter) => {
                 const content =
@@ -137,7 +137,7 @@ function Main({ id }: { id?: string }) {
         )}
       </div>
 
-      <div className="w-1/2 bottom-5 absolute left-1/2 transform -translate-x-1/2">
+      <div className="px-2 w-full lg:w-1/2 bottom-5 absolute left-1/2 transform -translate-x-1/2">
         <div className="flex justify-center gap-5">
           <Input
             type="file"

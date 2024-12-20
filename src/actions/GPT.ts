@@ -1,6 +1,3 @@
-// This file contains functions to interact with the GPT-4 API via RapidAPI.
-// The functions handle GET and POST requests to communicate with the API and process responses.
-
 "use server";
 
 import axios from "axios";
@@ -11,7 +8,7 @@ import { GPT4Response } from "@/@types/GPTResponse";
  *
  * @returns {Promise<GPT4Response>} - A promise resolving to a GPT4Response object or an object with the status code.
  */
-export async function pingGPT(): Promise<GPT4Response>  {
+export async function pingGPT(): Promise<GPT4Response> {
   try {
     const response = await axios.request({
       method: "GET",
@@ -51,9 +48,7 @@ export async function getGPTResponse(message: string): Promise<GPT4Response> {
         "Content-Type": "application/json",
       },
       data: {
-        messages: [
-          { role: "user", content: message },
-        ],
+        messages: [{ role: "user", content: message }],
         system_prompt: `analyze this text, and provide me response in structured manner. in the following way
 1.  Content category
 2. Theme

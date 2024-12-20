@@ -15,7 +15,7 @@ function SideBar({ id }: { id?: string }) {
   /**
    * Function: handleDelete
    * Description: Removes a specific query object from the local storage by its unique `id`.
-   * Parameters: 
+   * Parameters:
    *  - `id` (string): The unique identifier of the query to be deleted.
    * Functionality:
    *  1. Retrieves the "queries" array from local storage, or initializes an empty array if it doesn't exist.
@@ -29,58 +29,118 @@ function SideBar({ id }: { id?: string }) {
       (query: LocalStorageQueries) => query.id !== id
     );
     localStorage.setItem("queries", JSON.stringify(newQueries));
-    window.location.href = "/"; 
+    window.location.href = "/";
   };
 
   return (
-    <div
-      className={classNames(
-        "hidden text-white sticky h-screen bg-zinc-800 transition-all duration-300",
-        { "w-0": !open, "w-96": open }
-      )}
-    >
-      <div className="flex items-center gap-4 absolute top-4 left-4">
-        <GoSidebarCollapse
-          className={classNames("hidden lg:block w-6 h-6 cursor-pointer")}
-          onClick={() => toggleSideBar()}
-        />
-        <GoPencil
-          className={classNames("w-6 h-6 cursor-pointer ")}
-          onClick={() => (window.location.href = "/")}
-        />
+    <>
+      <div
+        className={classNames(
+          "hidden lg:block text-white sticky h-screen bg-zinc-800 transition-all duration-300",
+          { "w-0": !open, "lg:w-96": open }
+        )}
+      >
+        <div className="flex items-center gap-4 absolute top-4 left-4">
+          <GoSidebarCollapse
+            className={classNames("w-6 h-6 cursor-pointer")}
+            onClick={() => toggleSideBar()}
+          />
+          <GoPencil
+            className={classNames("w-6 h-6 cursor-pointer ")}
+            onClick={() => (window.location.href = "/")}
+          />
+        </div>
+        <div
+          className={classNames("flex flex-col items-start mt-16 px-1", {
+            hidden: !open,
+          })}
+        >
+          {localStorage.getItem("queries") &&
+            JSON.parse(localStorage.getItem("queries") || "[]")?.map(
+              (item: LocalStorageQueries) => (
+                <Link
+                  href={`/q/${item.id}`}
+                  passHref
+                  className={classNames(
+                    "my-1 w-full flex items-center justify-between hover:bg-zinc-900 transition-all duration-300 px-4 py-2 rounded-md",
+                    {
+                      "bg-zinc-900": item.id === id,
+                    }
+                  )}
+                  key={item.id}
+                >
+                  <span className="overflow-hidden w-full whitespace-nowrap cursor-pointer">
+                    {item.title}
+                  </span>
+                  <FaTrash
+                    className="w-3 h-3 cursor-pointer"
+                    onClick={() => handleDelete(item.id)}
+                  />
+                </Link>
+              )
+            )}
+        </div>
       </div>
 
-      <div
-        className={classNames("flex flex-col items-start mt-16 px-1", {
-          hidden: !open,
-        })}
-      >
-        {localStorage.getItem("queries") &&
-          JSON.parse(localStorage.getItem("queries") || "[]")?.map(
-            (item: LocalStorageQueries) => (
-              <Link
-                href={`/q/${item.id}`}
-                passHref
-                className={classNames(
-                  "my-1 w-full flex items-center justify-between hover:bg-zinc-900 transition-all duration-300 px-4 py-2 rounded-md",
-                  {
-                    "bg-zinc-900": item.id === id,
-                  }
-                )}
-                key={item.id}
-              >
-                <span className="overflow-hidden w-full whitespace-nowrap cursor-pointer">
-                  {item.title}
-                </span>
-                <FaTrash
-                  className="w-3 h-3 cursor-pointer"
-                  onClick={() => handleDelete(item.id)}
-                />
-              </Link>
-            )
+      <div>
+        <GoSidebarCollapse
+          className={classNames(
+            "lg:hidden fixed top-4 left-4 z-10 w-6 h-6 cursor-pointer",
+            { "w-12 h-12": open }
           )}
+          onClick={() => toggleSideBar()}
+        />
+
+        <div
+          className={classNames(
+            "z-20 lg:hidden bg-zinc-800 w-screen absolute h-screen transition-all duration-300",
+            {
+              "-translate-x-full": !open,
+              "translate-x-0": open,
+            }
+          )}
+        >
+          <div className="flex items-center w-full justify-between top-4 absolute px-4">
+            <GoSidebarCollapse
+              className={classNames("w-6 h-6 cursor-pointer")}
+              onClick={() => toggleSideBar()}
+            />
+
+            <GoPencil
+              className={classNames("w-6 h-6 cursor-pointer ")}
+              onClick={() => (window.location.href = "/")}
+            />
+          </div>
+
+          <div className="mt-20 px-2">
+            {localStorage.getItem("queries") &&
+              JSON.parse(localStorage.getItem("queries") || "[]")?.map(
+                (item: LocalStorageQueries) => (
+                  <Link
+                    href={`/q/${item.id}`}
+                    passHref
+                    className={classNames(
+                      "my-1 w-full flex items-center justify-between hover:bg-zinc-900 transition-all duration-300 px-4 py-2 rounded-md",
+                      {
+                        "bg-zinc-900": item.id === id,
+                      }
+                    )}
+                    key={item.id}
+                  >
+                    <span className="overflow-hidden w-full whitespace-nowrap cursor-pointer">
+                      {item.title}
+                    </span>
+                    <FaTrash
+                      className="w-3 h-3 cursor-pointer"
+                      onClick={() => handleDelete(item.id)}
+                    />
+                  </Link>
+                )
+              )}
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
